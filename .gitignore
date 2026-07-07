@@ -1,0 +1,5 @@
+node_modules
+dist
+play-map.json
+.DS_Store
+*.log
