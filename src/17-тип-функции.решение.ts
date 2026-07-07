@@ -1,6 +1,6 @@
 export type Handler = (event: string) => void;
 
-const onClick: Handler = (event) => {
+export const onClick: Handler = (event) => {
   console.log("Клик:", event);
 };
 

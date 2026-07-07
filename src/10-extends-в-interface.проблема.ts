@@ -6,7 +6,7 @@ export interface Admin {
   role: string;
 }
 
-const a: Admin = { 
+export const a: Admin = { 
   name: "Макс", 
   role: "lead" 
 };

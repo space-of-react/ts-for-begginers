@@ -2,4 +2,4 @@ export interface Status {
 
 }
 
-const s: Status = "loading";
+export const s: Status = "loading";

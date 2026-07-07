@@ -5,6 +5,6 @@ export type User = {
 
 export type UserPatch = User;
 
-const patch: UserPatch = {
+export const patch: UserPatch = {
   email: "max@maxroslow.ru",
 };

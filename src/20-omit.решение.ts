@@ -6,7 +6,7 @@ export type User = {
 
 export type PublicUser = Omit<User, "email">;
 
-const publicUser: PublicUser = {
+export const publicUser: PublicUser = {
   name: "Макс",
   age: 25,
   // @ts-expect-error в публичном профиле не должно быть email

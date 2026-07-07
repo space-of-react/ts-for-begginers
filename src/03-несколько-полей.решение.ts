@@ -3,7 +3,7 @@ export type Product = {
   price: number;
 };
 
-const item: Product = { 
+export const item: Product = { 
   title: "Книга", 
   price: 500 
 };

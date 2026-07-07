@@ -2,4 +2,4 @@ export function greet(name: string) {
   return "Привет, " + name;
 }
 
-const message = greet("Макс");
+export const message = greet("Макс");

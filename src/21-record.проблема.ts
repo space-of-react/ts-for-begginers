@@ -1,6 +1,6 @@
 export type Scores = any;
 
-const scores: Scores = {
+export const scores: Scores = {
   math: 90,
   history: 85,
 };

@@ -1,3 +1,3 @@
 export type Name = string;
 
-const myName: Name = "Макс";
+export const myName: Name = "Макс";

@@ -1,4 +1,4 @@
 export type Id = string;
 
-const a: Id = "abc-123";
-const b: Id = 42;
+export const a: Id = "abc-123";
+export const b: Id = 42;

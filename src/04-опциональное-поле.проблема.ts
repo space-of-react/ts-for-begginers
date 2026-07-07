@@ -3,11 +3,11 @@ export type User = {
   email: string;
 };
 
-const u1: User = { 
+export const u1: User = { 
   name: "Макс", 
   email: "max@gmail.com"
 };
 
-const u2: User = { 
+export const u2: User = { 
   name: "Аня" 
 };

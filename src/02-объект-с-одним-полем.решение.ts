@@ -2,6 +2,6 @@ export type User = {
     name: string 
 };
 
-const me: User = { 
+export const me: User = { 
     name: "Макс" 
 };

@@ -6,7 +6,7 @@ export type User = {
 
 export type UserPreview = Pick<User, "name">;
 
-const preview: UserPreview = {
+export const preview: UserPreview = {
   name: "Макс",
   // @ts-expect-error в превью должно быть только имя, без email
   email: "max@maxroslow.ru",

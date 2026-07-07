@@ -1,6 +1,6 @@
 export type Scores = Record<string, number>;
 
-const scores: Scores = {
+export const scores: Scores = {
   math: 90,
   history: 85,
 };

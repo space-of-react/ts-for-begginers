@@ -4,7 +4,7 @@ export type User = {
 
 export type AdminUser = User & { role: string };
 
-const u: AdminUser = { 
+export const u: AdminUser = { 
   name: "Макс", 
   role: "admin" 
 };

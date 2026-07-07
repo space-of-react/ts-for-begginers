@@ -2,7 +2,7 @@ export type Product = {
   title: string;
 };
 
-const item: Product = { 
+export const item: Product = { 
   title: "Книга", 
   price: 500 
 };

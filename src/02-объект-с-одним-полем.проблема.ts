@@ -1,5 +1,5 @@
 export type User = any;
 
-const me: User = { 
+export const me: User = { 
     name: "Макс" 
 };

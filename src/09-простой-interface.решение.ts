@@ -3,7 +3,7 @@ export interface Product {
   price: number;
 }
 
-const p: Product = { 
+export const p: Product = { 
   title: "Книга", 
   price: 500 
 };

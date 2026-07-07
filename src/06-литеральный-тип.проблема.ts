@@ -1,3 +1,3 @@
 export type Theme = string;
 
-const current: Theme = "light";
+export const current: Theme = "light";
