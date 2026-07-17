@@ -87,6 +87,45 @@ function isTaskFile(filePath) {
   return /^(\d{2,})-.+\.(проблема|решение)\.(jsx|tsx|html|js|ts)$/i.test(base);
 }
 
+const SOLUTION_TEST_HEADER =
+  '// ⚙️ АВТОГЕНЕРАЦИЯ — не редактируй вручную.\n' +
+  '// Это копия соседнего теста задания с импортом решения вместо проблемы.\n' +
+  '// Правь исходный tests/NN.test.ts и запусти: npm run play:generate\n\n';
+
+/**
+ * Из каждого tests/NN.test.ts делает tests/NN.solution.test.ts,
+ * заменяя в путях «.проблема» на «.решение», чтобы solution-NN
+ * прогонял те же проверки против файла решения.
+ * Возвращает список исходных (problem) тест-файлов.
+ */
+async function generateSolutionTests() {
+  const testsDir = path.join(PROJECT_ROOT, 'tests');
+  let entries = [];
+  try {
+    entries = await fs.readdir(testsDir);
+  } catch {
+    return []; // папки tests ещё нет
+  }
+
+  // Сносим старые сгенерированные solution-тесты (чтобы не оставались «сироты»)
+  for (const f of entries) {
+    if (/\.solution\.test\.ts$/i.test(f)) {
+      await fs.rm(path.join(testsDir, f));
+    }
+  }
+
+  // Исходные тесты задания: NN.test.ts (только цифры/дефис перед .test.ts)
+  const problemTests = entries.filter((f) => /^[\d-]+\.test\.ts$/.test(f));
+  for (const tf of problemTests) {
+    const content = await fs.readFile(path.join(testsDir, tf), 'utf8');
+    const solContent = SOLUTION_TEST_HEADER + content.split('.проблема').join('.решение');
+    const solName = tf.replace(/\.test\.ts$/, '.solution.test.ts');
+    await fs.writeFile(path.join(testsDir, solName), solContent, 'utf8');
+  }
+
+  return problemTests;
+}
+
 async function main() {
   try {
     await fs.access(SRC_DIR);
@@ -123,22 +162,37 @@ async function main() {
   if (!pkg.scripts.dev) pkg.scripts.dev = 'vite';
   pkg.scripts['play:generate'] = 'node scripts/generate-play-commands.mjs';
 
+  // Автогенерация solution-вариантов тестов.
+  // Автор пишет ОДИН файл tests/NN.test.ts (импортит «.проблема»).
+  // Отсюда создаём tests/NN.solution.test.ts с подменой «.проблема» → «.решение»,
+  // чтобы solution-NN прогонял те же проверки против решения.
+  const problemTestFiles = await generateSolutionTests();
+
+  const has = async (file) => {
+    try {
+      await fs.access(path.join(PROJECT_ROOT, file));
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   for (const rel of taskFiles) {
     const name = buildScriptName(rel);
     let cmd = buildCommand(rel);
 
-    // Одна команда на задание: npm run task:NN сразу запускает самопроверку
-    // в watch-режиме — терминал показывает чеклист и ✓/× вживую при сохранении.
+    // Одна команда на задание. task:NN и solution-NN открывают UI-дашборд в браузере
+    // (@vitest/ui) и одновременно печатают результат в терминал — список проверок
+    // с ✓/× по-русски, обновляется при сохранении.
     // Если файла теста ещё нет — падаем обратно на браузерное превью (vite).
     if (name.startsWith('task:')) {
       const suffix = name.slice('task:'.length); // напр. "01" или "03-02"
       const testFile = `tests/${suffix}.test.ts`;
-      try {
-        await fs.access(path.join(PROJECT_ROOT, testFile));
-        cmd = `vitest ${testFile}`;
-      } catch {
-        // теста для этого задания пока нет — оставляем превью
-      }
+      if (await has(testFile)) cmd = `vitest --ui ${testFile}`;
+    } else if (name.startsWith('solution-')) {
+      const suffix = name.slice('solution-'.length);
+      const solTest = `tests/${suffix}.solution.test.ts`;
+      if (await has(solTest)) cmd = `vitest --ui ${solTest}`;
     }
 
     pkg.scripts[name] = cmd;
@@ -146,6 +200,7 @@ async function main() {
 
   await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2) + '\n', 'utf8');
   console.log(`Сгенерировано скриптов: ${taskFiles.length}`);
+  console.log(`Solution-тестов сгенерировано: ${problemTestFiles.length}`);
 }
 
 main().catch((e) => {
