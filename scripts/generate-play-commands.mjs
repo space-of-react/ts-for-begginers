@@ -105,9 +105,16 @@ async function main() {
   const pkg = JSON.parse(pkgRaw);
   pkg.scripts = pkg.scripts || {};
 
-  // Remove old play:@src:* entries and old task:/solution- entries
+  // Remove old play:@src:* entries and old task:/solution-/test entries
   for (const key of Object.keys(pkg.scripts)) {
-    if (key.startsWith('play:@src:') || key.startsWith('task:') || key.startsWith('solution-')) {
+    if (
+      key.startsWith('play:@src:') ||
+      key.startsWith('task:') ||
+      key.startsWith('solution-') ||
+      key === 'test' ||
+      key === 'test:watch' ||
+      /^test:\d/.test(key)
+    ) {
       delete pkg.scripts[key];
     }
   }
@@ -118,7 +125,22 @@ async function main() {
 
   for (const rel of taskFiles) {
     const name = buildScriptName(rel);
-    const cmd = buildCommand(rel);
+    let cmd = buildCommand(rel);
+
+    // Одна команда на задание: npm run task:NN сразу запускает самопроверку
+    // в watch-режиме — терминал показывает чеклист и ✓/× вживую при сохранении.
+    // Если файла теста ещё нет — падаем обратно на браузерное превью (vite).
+    if (name.startsWith('task:')) {
+      const suffix = name.slice('task:'.length); // напр. "01" или "03-02"
+      const testFile = `tests/${suffix}.test.ts`;
+      try {
+        await fs.access(path.join(PROJECT_ROOT, testFile));
+        cmd = `vitest ${testFile}`;
+      } catch {
+        // теста для этого задания пока нет — оставляем превью
+      }
+    }
+
     pkg.scripts[name] = cmd;
   }
 
