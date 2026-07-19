@@ -6,7 +6,7 @@ import { describe, test, expectTypeOf } from 'vitest';
 import type { Theme } from '../src/06-литеральный-тип.решение';
 
 describe('06 — литеральный тип', () => {
-  test('тип Theme должен быть литералом "light" (а не string)', () => {
+  test('Theme допускает единственное значение "light"', () => {
     expectTypeOf<Theme>().toEqualTypeOf<'light'>();
   });
 });

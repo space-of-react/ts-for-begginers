@@ -5,8 +5,8 @@
 import { describe, test, expect, expectTypeOf } from 'vitest';
 import { getAge } from '../src/14-тип-возврата.решение';
 
-describe('14 — тип возврата', () => {
-  test('getAge должна возвращать number', () => {
+describe('14 — тип возвращаемого значения', () => {
+  test('getAge возвращает значение типа number', () => {
     expectTypeOf(getAge).returns.toEqualTypeOf<number>();
   });
 

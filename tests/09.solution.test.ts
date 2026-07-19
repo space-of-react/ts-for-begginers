@@ -11,12 +11,12 @@ const source = readFileSync(
   'utf8',
 );
 
-describe('09 — простой interface', () => {
-  test('Product должен быть объявлен через ключевое слово interface', () => {
+describe('09 — интерфейс (interface)', () => {
+  test('Product объявлен через ключевое слово interface', () => {
     expect(source).toMatch(/interface\s+Product/);
   });
 
-  test('структура Product: { title: string; price: number }', () => {
+  test('Product содержит поля title: string и price: number', () => {
     expectTypeOf<Product>().toEqualTypeOf<{ title: string; price: number }>();
   });
 });
