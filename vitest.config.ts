@@ -10,9 +10,9 @@ export default defineConfig({
       enabled: true,
       include: ['tests/**/*.test.ts'],
       tsconfig: './tsconfig.tests.json',
-      // Ошибки внутри самих файлов src/ мы не показываем как отдельные:
-      // за корректность отвечают явные проверки в тестах (читаются понятнее).
-      ignoreSourceErrors: true,
+      // // Ошибки внутри самих файлов src/ мы не показываем как отдельные:
+      // // за корректность отвечают явные проверки в тестах (читаются понятнее).
+      // ignoreSourceErrors: false,
     },
   },
 });
