@@ -1,8 +1,8 @@
 import { describe, test, expectTypeOf } from 'vitest';
-import type { Handler } from '../src/17-тип-функции.проблема';
+import type { UserPatch } from '../src/17-partial.проблема';
 
-describe('17 — тип функции', () => {
-  test('Handler — тип функции-обработчика (event: string) => void', () => {
-    expectTypeOf<Handler>().toEqualTypeOf<(event: string) => void>();
+describe('17 — утилита Partial', () => {
+  test('UserPatch делает все поля User опциональными', () => {
+    expectTypeOf<UserPatch>().toEqualTypeOf<{ name?: string; email?: string }>();
   });
 });

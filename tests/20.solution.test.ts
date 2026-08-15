@@ -3,10 +3,10 @@
 // Правь исходный tests/NN.test.ts и запусти: npm run play:generate
 
 import { describe, test, expectTypeOf } from 'vitest';
-import type { PublicUser } from '../src/20-omit.решение';
+import type { Scores } from '../src/20-record.решение';
 
-describe('20 — утилита Omit', () => {
-  test('PublicUser — это User без поля email', () => {
-    expectTypeOf<PublicUser>().toEqualTypeOf<{ name: string; age: number }>();
+describe('20 — утилита Record', () => {
+  test('Scores — словарь Record<string, number>', () => {
+    expectTypeOf<Scores>().toEqualTypeOf<Record<string, number>>();
   });
 });

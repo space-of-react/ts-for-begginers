@@ -3,10 +3,10 @@
 // Правь исходный tests/NN.test.ts и запусти: npm run play:generate
 
 import { describe, test, expectTypeOf } from 'vitest';
-import type { UserPatch } from '../src/18-partial.решение';
+import type { UserPreview } from '../src/18-pick.решение';
 
-describe('18 — утилита Partial', () => {
-  test('UserPatch делает все поля User опциональными', () => {
-    expectTypeOf<UserPatch>().toEqualTypeOf<{ name?: string; email?: string }>();
+describe('18 — утилита Pick', () => {
+  test('UserPreview выбирает из User только поле name', () => {
+    expectTypeOf<UserPreview>().toEqualTypeOf<{ name: string }>();
   });
 });

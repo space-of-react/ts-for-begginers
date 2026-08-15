@@ -1,8 +1,8 @@
 import { describe, test, expectTypeOf } from 'vitest';
-import type { PublicUser } from '../src/20-omit.проблема';
+import type { Scores } from '../src/20-record.проблема';
 
-describe('20 — утилита Omit', () => {
-  test('PublicUser — это User без поля email', () => {
-    expectTypeOf<PublicUser>().toEqualTypeOf<{ name: string; age: number }>();
+describe('20 — утилита Record', () => {
+  test('Scores — словарь Record<string, number>', () => {
+    expectTypeOf<Scores>().toEqualTypeOf<Record<string, number>>();
   });
 });

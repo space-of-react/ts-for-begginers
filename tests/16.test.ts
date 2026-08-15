@@ -1,12 +1,8 @@
-import { describe, test, expect, expectTypeOf } from 'vitest';
-import { greet } from '../src/16-опциональный-параметр.проблема';
+import { describe, test, expectTypeOf } from 'vitest';
+import type { Handler } from '../src/16-тип-функции.проблема';
 
-describe('16 — параметр со значением по умолчанию', () => {
-  test('greet можно вызвать без аргументов', () => {
-    expectTypeOf(greet).toBeCallableWith();
-  });
-
-  test('greet() без аргументов возвращает "Привет, гость"', () => {
-    expect(greet()).toBe('Привет, гость');
+describe('16 — тип функции', () => {
+  test('Handler — тип функции-обработчика (event: string) => void', () => {
+    expectTypeOf<Handler>().toEqualTypeOf<(event: string) => void>();
   });
 });

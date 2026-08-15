@@ -2,19 +2,17 @@
 // Это копия соседнего теста задания с импортом решения вместо проблемы.
 // Правь исходный tests/NN.test.ts и запусти: npm run play:generate
 
-import { describe, test, expect, vi } from 'vitest';
-import { speak } from '../src/23-оператор-in.решение';
+import { describe, test, expect } from 'vitest';
+import { handle } from '../src/23-дискриминированный-union.решение';
 
-describe('23 — сужение типа через оператор in', () => {
-  test('для кота вызывается метод meow()', () => {
-    const cat = { meow: vi.fn() };
-    speak(cat);
-    expect(cat.meow).toHaveBeenCalledTimes(1);
+describe('23 — дискриминированное объединение (discriminated union)', () => {
+  test('результат со статусом success возвращает данные', () => {
+    expect(handle({ status: 'success', data: 'ok' })).toBe('ok');
   });
 
-  test('для собаки вызывается метод bark()', () => {
-    const dog = { bark: vi.fn() };
-    speak(dog);
-    expect(dog.bark).toHaveBeenCalledTimes(1);
+  test('результат со статусом error возвращает сообщение', () => {
+    expect(handle({ status: 'error', message: 'что-то сломалось' })).toBe(
+      'что-то сломалось',
+    );
   });
 });

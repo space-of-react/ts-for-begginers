@@ -1,8 +1,8 @@
 import { describe, test, expectTypeOf } from 'vitest';
-import type { Admin } from '../src/10-extends-в-interface.проблема';
+import type { AdminUser } from '../src/10-пересечение-через-amp.проблема';
 
-describe('10 — наследование интерфейсов (extends)', () => {
-  test('Admin наследует поля User и добавляет role', () => {
-    expectTypeOf<Admin>().toEqualTypeOf<{ name: string; role: string }>();
+describe('10 — пересечение типов (&)', () => {
+  test('AdminUser — пересечение User и { role: string }', () => {
+    expectTypeOf<AdminUser>().toEqualTypeOf<{ name: string } & { role: string }>();
   });
 });

@@ -55,9 +55,7 @@
     "task:22": "vitest --ui tests/22.test.ts",
     "solution-22": "vitest --ui tests/22.solution.test.ts",
     "task:23": "vitest --ui tests/23.test.ts",
-    "solution-23": "vitest --ui tests/23.solution.test.ts",
-    "task:24": "vitest --ui tests/24.test.ts",
-    "solution-24": "vitest --ui tests/24.solution.test.ts"
+    "solution-23": "vitest --ui tests/23.solution.test.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.66.0",

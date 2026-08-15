@@ -2,11 +2,15 @@
 // Это копия соседнего теста задания с импортом решения вместо проблемы.
 // Правь исходный tests/NN.test.ts и запусти: npm run play:generate
 
-import { describe, test, expectTypeOf } from 'vitest';
-import type { Logger } from '../src/15-void.решение';
+import { describe, test, expect, expectTypeOf } from 'vitest';
+import { greet } from '../src/15-опциональный-параметр.решение';
 
-describe('15 — тип void', () => {
-  test('Logger — функция, ничего не возвращающая ((message: string) => void)', () => {
-    expectTypeOf<Logger>().toEqualTypeOf<(message: string) => void>();
+describe('15 — параметр со значением по умолчанию', () => {
+  test('greet можно вызвать без аргументов', () => {
+    expectTypeOf(greet).toBeCallableWith();
+  });
+
+  test('greet() без аргументов возвращает "Привет, гость"', () => {
+    expect(greet()).toBe('Привет, гость');
   });
 });

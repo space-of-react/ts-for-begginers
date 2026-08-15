@@ -1,8 +1,12 @@
-import { describe, test, expectTypeOf } from 'vitest';
-import { greet } from '../src/13-параметры-функции.проблема';
+import { describe, test, expect, expectTypeOf } from 'vitest';
+import { getAge } from '../src/13-тип-возврата.проблема';
 
-describe('13 — типизация параметров функции', () => {
-  test('Параметр функции greet имеет тип string', () => {
-    expectTypeOf(greet).parameter(0).toEqualTypeOf<string>();
+describe('13 — тип возвращаемого значения', () => {
+  test('getAge возвращает значение типа number', () => {
+    expectTypeOf(getAge).returns.toEqualTypeOf<number>();
+  });
+
+  test('getAge() возвращает 25', () => {
+    expect(getAge()).toBe(25);
   });
 });
